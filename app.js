@@ -4,6 +4,14 @@ const app = express();
 
 app.set("view engine", 'ejs')   // to render html pages into express server
 
+// Middleware : the request pass through a function everytime it is rendered into the route or while changing the route
+// Types of middlewares : built in, custom, third party
+app.use((req,res,next)=>{   // to pass the request through a function called middleware
+    console.log("This is middleware");
+    // res.send("Middleware passed!")
+    return next()   // to continue to the flow
+})
+
 app.get('/', (req, res) => {
     res.render('index');    // render helps in rendering the page into the given route
 })

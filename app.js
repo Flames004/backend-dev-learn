@@ -2,8 +2,13 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 
-app.use(morgan('dev'));  // to log the requests in the console
 app.set("view engine", 'ejs')   // to set the view engine to ejs and render index.ejs file
+
+app.use(morgan('dev'));  // to log the requests in the console [Third Party Middleware]
+
+// Middleware to parse the request body [Built In Middleware]
+app.use(express.urlencoded({ extended: true }));  // to parse the form data from the request body
+app.use(express.json());  // to parse the JSON data from the request body
 
 // Custom middleware to log requests
 // This middleware will log the method and URL of each request

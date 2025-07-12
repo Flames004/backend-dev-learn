@@ -9,6 +9,7 @@ app.use(morgan('dev'));  // to log the requests in the console [Third Party Midd
 // Middleware to parse the request body [Built In Middleware]
 app.use(express.urlencoded({ extended: true }));  // to parse the form data from the request body
 app.use(express.json());  // to parse the JSON data from the request body
+app.use(express.static('public'));  // to serve static files from the public directory
 
 // Custom middleware to log requests
 // This middleware will log the method and URL of each request

@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
+const userModel = require('./models/user');  // Importing the user model
+const dbConnection = require('./config/db');  // Importing the database connection
 
 app.set("view engine", 'ejs')   // to set the view engine to ejs and render index.ejs file
 

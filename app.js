@@ -34,16 +34,6 @@ app.get('/profile', (req, res) => {
     res.send("Profile Page");
 })
 
-app.get('/register', (req, res) => {
-    res.render('register');  // Render the register.ejs file
-})
-
-app.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;  // Destructure the form data
-    const newUser = await userModel.create({ username: username, email: email, password: password })  // Create a new user in the database
-    res.send("User registered successfully");
-})
-
 // the 'get' method is used to get the data from the server but it shows the data in the URL [server to frontend]
 // app.get("/get-form-data", (req, res) => {
 //     console.log(req.query);
@@ -55,5 +45,50 @@ app.post("/get-form-data", (req, res) => {
     console.log(req.body);
     res.send("Form data received");
 })
+
+
+// This route will handle the form submission when the user submits the registration form. It will create a new user in the database with the form data
+app.get('/register', (req, res) => {
+    res.render('register');  // Render the register.ejs file
+})
+
+// Create Operation in MongoDB
+app.post('/register', async (req, res) => {
+    const { username, email, password } = req.body;  // Destructure the form data
+    const newUser = await userModel.create({ username: username, email: email, password: password })  // Create a new user in the database
+    res.send("User registered successfully");
+})
+
+// Read Operation in MongoDB
+app.get('/get-users', (req, res) => {
+    userModel.find({ username: 'deeapk' }).then((users) => {
+        console.log(users);
+        res.json(users);  // Send the users as a JSON response
+    })
+})
+app.get('/get-users2', (req, res) => {  // FindOne shows only one user
+    userModel.findOne({ username: 'deeapk' }).then((users) => {
+        console.log(users);
+        res.json(users);  // Send the users as a JSON response
+    })
+})
+
+// Update Operation in MongoDB
+app.get('/update-user', async (req, res) => {
+    await userModel.findOneAndUpdate(
+        { username: 'user2' }, { email: 'user2@mail.com' }  // Find the user with username 'deeapk' and update their email
+    ).then((user) => {
+        console.log(user);
+        res.send("User updated successfully");
+    })
+})
+
+// Delete Operation in MongoDB
+app.get('/delete-user', async (req, res) => {
+    await userModel.findOneAndDelete({ username: 'deeapk' }).then((user) => {  // Find the user with username 'deeapk' and delete them
+        console.log(user);
+        res.send("User deleted successfully");
+    })
+});
 
 app.listen(3000);

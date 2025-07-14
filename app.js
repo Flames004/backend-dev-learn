@@ -34,6 +34,16 @@ app.get('/profile', (req, res) => {
     res.send("Profile Page");
 })
 
+app.get('/register', (req, res) => {
+    res.render('register');  // Render the register.ejs file
+})
+
+app.post('/register', async (req, res) => {
+    const { username, email, password } = req.body;  // Destructure the form data
+    const newUser = await userModel.create({ username: username, email: email, password: password })  // Create a new user in the database
+    res.send("User registered successfully");
+})
+
 // the 'get' method is used to get the data from the server but it shows the data in the URL [server to frontend]
 // app.get("/get-form-data", (req, res) => {
 //     console.log(req.query);
